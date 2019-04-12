@@ -64,7 +64,7 @@ public class ShovelReconciler {
             try {
                 apiClient.createOrUpdateShovel(connectionInfo, shovelParameter);
             } catch (final IOException e) {
-                log.error(String.format("Failed to create shovel with name %s for cluster %s in namespace %s", shovel.getName(), cluster.getName(), cluster.getNamespace()), e);
+                log.error(String.format("Failed to create shovel with name %s", shovel.getName()), e);
             }
         }
     }
@@ -93,7 +93,7 @@ public class ShovelReconciler {
                 try {
                     apiClient.deleteShovel(connectionInfo, existingShovel.getValue().getVhost(), shovelName);
                 } catch (final IOException e) {
-                    log.error(String.format("Failed to delete shovel with name %s with %s vhost in cluster %s in namespace %s", shovelName, existingShovel.getValue().getVhost(), clusterName, clusterNamespace), e);
+                    log.error(String.format("Failed to delete shovel with name %s with %s vhost", shovelName, existingShovel.getValue().getVhost()), e);
                 }
             }
         }

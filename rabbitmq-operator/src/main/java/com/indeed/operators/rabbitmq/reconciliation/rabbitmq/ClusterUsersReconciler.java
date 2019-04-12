@@ -59,7 +59,7 @@ public class ClusterUsersReconciler {
                 try {
                     apiClient.deleteUser(connectionInfo, existingUser.getKey());
                 } catch (final IOException e) {
-                    log.error(String.format("Failed to delete user %s in cluster %s in namespace %s", existingUser, cluster.getName(), cluster.getNamespace()), e);
+                    log.error(String.format("Failed to delete user %s", existingUser), e);
                 }
             }
         }
@@ -92,7 +92,7 @@ public class ClusterUsersReconciler {
             // We use getStringData() here because we just constructed the secret. If the secret had been retrieved from the k8s api, we would use getData() instead
             apiClient.createOrUpdateUser(connectionInfo, user.getUsername(), password, user.getTags());
         } catch (final IOException e) {
-            log.error(String.format("Failed to create/update user %s in cluster %s in namespace %s", user.getUsername(), user.getClusterMetadata().getName(), user.getClusterMetadata().getNamespace()), e);
+            log.error(String.format("Failed to create/update user %s", user.getUsername()), e);
         }
 
         // todo: only update vhosts if we need to
@@ -104,7 +104,7 @@ public class ClusterUsersReconciler {
             try {
                 apiClient.updateVHostPermissions(connectionInfo, vhost.getVhostName(), user.getUsername(), vhost.getPermissions());
             } catch (final IOException ex) {
-                log.error(String.format("Failed to set vhost permissions for user %s in vhost %s in cluster %s in namespace %s", user.getUsername(), vhost.getVhostName(), user.getClusterMetadata().getName(), user.getClusterMetadata().getNamespace()), ex);
+                log.error(String.format("Failed to set vhost permissions for user %s in vhost %s", user.getUsername(), vhost.getVhostName()), ex);
             }
         }
     }
